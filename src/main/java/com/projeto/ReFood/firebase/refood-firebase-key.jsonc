@@ -1,0 +1,13 @@
+// {
+//   "type": "service_account",
+//   "project_id": "refood-storage",
+//   "private_key_id": "79124c4c5f0b194871a7140c144a1399c9195fd5",
+//   "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCr2heu6gM3RBTy\nOKennzidKnW7vIW7JdnDC75yKXe0jFTteuXMw3prsniABSJ6lFPp1Kupc3RJN35a\nkPMfEvX1DKIDT6dCc+G0IYGgCWK4sBzZEnbXRi9B2S+Uync4PHLKKhpUyaq+iteq\n6buiENX/N/0IKYWUpXojUW9bfrRYk5g2Yxp7F+CQwLKiS9Z7NVNufjHNx6T+K8od\nuNQmYZUwBMQqIcUOLIS9czSPxgPZcSGxO9T+LJfSSWKQfRXEMnU/LrhbxYatGYAH\nYj0fHLKcXd3N4c1LtUt6ftm67M4J7jROMoFgW/A7Pj/FwufvjRTKRgXiDxVDTRj8\n8XB6lf1FAgMBAAECggEACJAHkuV3ObijSDVhSdARuKeuBue8DGjfT+FaK3iG+HXv\nNlz5AxSbWS84OKgTgXg6B8zbAnNYUDHwZ6/7Y9PknEGKogUaQEyjVT+/zxr18l4D\nYJ/TpY108IA9526WIEpyGBd0c+nkyh/Yt/FI8iiKF8XGTl2OmcCL/yNWhoB1Q8jT\n7XIUL/jgeuhBKhrM4Sh21FdCFRfgWpJWR0hJbZCA4VARWFxlFz0JfT1Obq5Hoxgz\nkIdmAo6MMpO0XY0QVgG+c/aJ3dCT7IeqcwgbYM8bBfLQpdI3cGVprOenj6cpNhK4\nhjTJwYNhCL+KGmjO7NVs9HVj53GKtn5qnQ8n5IsOAQKBgQDeAr5aHrGxx7tvUXJa\nRHszLtiFK2nK8hpLEfWrLVYQY47qkQiRneburaxXJIIZMRU5ywaDc0EhBuAwOFGt\nYed8MD9bf+9Hk1aDooW8a6pqYeXDBA/f4+FTFRANCz8rSEBtAWPwOB3QKMuMqBow\nZXEWNVE/Ix36/f5sXNbWnEdqAQKBgQDGKXo/5yNH6K5koEnWHNeQrd3xi0nRn53l\n6C823F645s5SdAET85p+BIeeEYQwyz7T23HRkaul9DEWmQyFgnL4xIleOqgE4dTI\nouHd8QxkTbBun6ckJpfrOgia0IJkA4gJHs1oN3lOFn4oRzXF9cK3aaWw08YLLtfG\nvXtXMghrRQKBgQDENEqEHMJP6sO0opdcPU9gMZN7RZ3OlN414B5sdLmt7D6/AQRA\npPsVjvlTXll36A/pLouIGpDBnnD9TJiqkW7iK0WjGNKgQA9icHyew8wtDm3fRrS8\n2oklQuUXkgv2tXjynRr0jrOSZqtVmK7kfJJP3Tj7go6ZZmW24OmhayYWAQKBgQCT\nLU051w7yIpQb8pzEZOmJ8EiOVNh/06AvmJIwmd3UUMBepwAB9IUDIZQkR3g50UqZ\niTvw3dNxz3sCAKw3INsJftdT4BbYgW5LkgZVk+mTOcxXbUZzaCKfN5wad9DQPXs0\n4ubGh6UV5UjP24vJuq1jEhlYywElXyYt2p+X9HYiTQKBgDmnk0cPNvBx7lj8n4wP\nDs8S1llxauK3owR2VEv81NVnEPVtIUS9WsTKJ8asqdwYcgNztFFrU+6iGOCbb55+\neHi8uT9Ul/9r2AcTMyFsl3CIe7HorGvbIyeNgEH1F1vUulnEX2071MxfNaKJOatM\nAvAyCH4sMdWohaNzv7PbQple\n-----END PRIVATE KEY-----\n",
+//   "client_email": "firebase-adminsdk-onp2g@refood-storage.iam.gserviceaccount.com",
+//   "client_id": "101364856127853615865",
+//   "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+//   "token_uri": "https://oauth2.googleapis.com/token",
+//   "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+//   "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-onp2g%40refood-storage.iam.gserviceaccount.com",
+//   "universe_domain": "googleapis.com"
+// }

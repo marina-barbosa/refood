@@ -1,0 +1,19 @@
+package com.projeto.ReFood.model;
+
+public enum EnumRestaurantCategory {
+  RESTAURANTE,
+  PADARIA,
+  SUPERMERCADO,
+  CAFETERIA,
+  PASTELARIA,
+  SUSHI_BAR,
+  FAST_FOOD,
+  LANCHONETE,
+  AÇOUGUE,
+  EMPORIO,
+  PEIXARIA,
+  CHURRASCARIA,
+  CONFEITARIA,
+  HORTIFRUTI,
+  OUTROS
+}
