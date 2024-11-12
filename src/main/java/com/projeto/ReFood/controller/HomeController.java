@@ -1,6 +1,10 @@
 package com.projeto.ReFood.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -52,5 +56,46 @@ public class HomeController {
     UserInfo currentUser = authService.getCurrentUserInfo();
     return currentUser;
   }
+
+  // @Value("${my.variable:Variable not found}")
+  // private String myVariable;
+
+  // @GetMapping("/show-variable")
+  // @ResponseBody
+  // public String showVariable() {
+  //   // $Env:MY_VARIABLE = "hello from powershell"
+  //   // Write-Output $Env:MY_VARIABLE
+  //   System.out.println("Valor da variável: " + myVariable);
+  //   return "Valor da variável de ambiente: " + myVariable;
+  // }
+
+  // @GetMapping("/getenv")
+  // @ResponseBody
+  // public Map<String, String> getEnv() {
+  //   return System.getenv(); // Retorna todas as variáveis de ambiente
+  // }
+
+  // @GetMapping("/firebase-config")
+  // @ResponseBody
+  // public Map<String, String> getFirebaseConfig() {
+
+  //   Map<String, String> envVariables = System.getenv();
+
+  //   Map<String, String> firebaseConfig = new HashMap<>();
+  //   firebaseConfig.put("FIREBASE_PROJECT_ID", envVariables.get("FIREBASE_PROJECT_ID"));
+  //   firebaseConfig.put("FIREBASE_PRIVATE_KEY_ID", envVariables.get("FIREBASE_PRIVATE_KEY_ID"));
+  //   firebaseConfig.put("FIREBASE_PRIVATE_KEY", envVariables.get("FIREBASE_PRIVATE_KEY"));
+  //   firebaseConfig.put("FIREBASE_CLIENT_EMAIL", envVariables.get("FIREBASE_CLIENT_EMAIL"));
+  //   firebaseConfig.put("FIREBASE_CLIENT_ID", envVariables.get("FIREBASE_CLIENT_ID"));
+  //   firebaseConfig.put("FIREBASE_AUTH_URI", envVariables.get("FIREBASE_AUTH_URI"));
+  //   firebaseConfig.put("FIREBASE_TOKEN_URI", envVariables.get("FIREBASE_TOKEN_URI"));
+  //   firebaseConfig.put("FIREBASE_AUTH_PROVIDER_X509_CERT_URL",
+  //       envVariables.get("FIREBASE_AUTH_PROVIDER_X509_CERT_URL"));
+  //   firebaseConfig.put("FIREBASE_CLIENT_X509_CERT_URL", envVariables.get("FIREBASE_CLIENT_X509_CERT_URL"));
+  //   firebaseConfig.put("FIREBASE_UNIVERSE_DOMAIN", envVariables.get("FIREBASE_UNIVERSE_DOMAIN"));
+  //   firebaseConfig.put("FIREBASE_STORAGE_BUCKET", envVariables.get("FIREBASE_STORAGE_BUCKET"));
+
+  //   return firebaseConfig;
+  // }
 
 }

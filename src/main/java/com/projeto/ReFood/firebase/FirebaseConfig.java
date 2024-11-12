@@ -5,84 +5,62 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.beans.factory.annotation.Value;
 
 import java.io.ByteArrayInputStream;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.util.HashMap;
+import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
 @Configuration
 public class FirebaseConfig {
 
-  @Value("${firebase.project-id}")
-  private String projectId;
-
-  @Value("${firebase.private-key-id}")
-  private String privateKeyId;
-
-  @Value("${firebase.private-key}")
-  private String privateKey;
-
-  @Value("${firebase.client-email}")
-  private String clientEmail;
-
-  @Value("${firebase.client-id}")
-  private String clientId;
-
-  @Value("${firebase.auth-uri}")
-  private String authUri;
-
-  @Value("${firebase.token-uri}")
-  private String tokenUri;
-
-  @Value("${firebase.auth-provider-x509-cert-url}")
-  private String authProviderCertUrl;
-
-  @Value("${firebase.client-x509-cert-url}")
-  private String clientCertUrl;
-
-  @Value("${firebase.universe-domain}")
-  private String universeDomain;
-
-  @Value("${firebase.storage-bucket}")
-  private String storageBucket;
-
   @Bean
-  public FirebaseApp initializeFirebase() throws IOException {
-    System.out.println("Project ID: " + projectId);
-    System.out.println("Private Key ID: " + privateKeyId);
-    System.out.println("Client Email: " + clientEmail);
-    
-    // Verifique se as variáveis estão corretas
-    if (projectId == null || privateKey == null || clientEmail == null) {
-      throw new IllegalArgumentException("Some Firebase environment variables are not set.");
-    }
+  public FirebaseApp initializeFirebase() throws Exception {
+    // Obter variáveis de ambiente
+    Map<String, String> envVariables = System.getenv();
 
-    // Criando um mapa com as configurações do Firebase
-    Map<String, Object> firebaseConfig = new HashMap<>();
-    firebaseConfig.put("type", "service_account");
-    firebaseConfig.put("project_id", projectId);
-    firebaseConfig.put("private_key_id", privateKeyId);
-    firebaseConfig.put("private_key", privateKey.replace("\\n", "\n"));
-    firebaseConfig.put("client_email", clientEmail);
-    firebaseConfig.put("client_id", clientId);
-    firebaseConfig.put("auth_uri", authUri);
-    firebaseConfig.put("token_uri", tokenUri);
-    firebaseConfig.put("auth_provider_x509_cert_url", authProviderCertUrl);
-    firebaseConfig.put("client_x509_cert_url", clientCertUrl);
+    // Obter todas as partes da chave privada
+    String privateKeyPart1 = envVariables.get("FIREBASE_PRIVATE_KEY_PART1");
+    String privateKeyPart2 = envVariables.get("FIREBASE_PRIVATE_KEY_PART2");
+    String privateKeyPart3 = envVariables.get("FIREBASE_PRIVATE_KEY_PART3");
+    String privateKeyPart4 = envVariables.get("FIREBASE_PRIVATE_KEY_PART4");
+    String privateKeyPart5 = envVariables.get("FIREBASE_PRIVATE_KEY_PART5");
+    String privateKeyPart6 = envVariables.get("FIREBASE_PRIVATE_KEY_PART6");
 
-    // Convertendo o mapa para um InputStream
-    ByteArrayInputStream serviceAccountStream = new ByteArrayInputStream(
-        new com.fasterxml.jackson.databind.ObjectMapper().writeValueAsBytes(firebaseConfig));
+    // Concatenar as partes da chave privada
+    String privateKey = privateKeyPart1 + privateKeyPart2 + privateKeyPart3 +
+        privateKeyPart4 + privateKeyPart5 + privateKeyPart6;
 
+    // Substituir \n por quebras de linha
+    privateKey = privateKey.replace("\\n", "\n");
+
+    // Criar a string de credenciais JSON com as variáveis de ambiente
+    String credentialsJson = String.format(
+        "{ \"type\": \"service_account\", \"project_id\": \"%s\", \"private_key_id\": \"%s\", \"private_key\": \"%s\", \"client_email\": \"%s\", \"client_id\": \"%s\", \"auth_uri\": \"%s\", \"token_uri\": \"%s\", \"auth_provider_x509_cert_url\": \"%s\", \"client_x509_cert_url\": \"%s\", \"universe_domain\": \"%s\" }",
+        envVariables.get("FIREBASE_PROJECT_ID"),
+        envVariables.get("FIREBASE_PRIVATE_KEY_ID"),
+        privateKey,
+        envVariables.get("FIREBASE_CLIENT_EMAIL"),
+        envVariables.get("FIREBASE_CLIENT_ID"),
+        envVariables.get("FIREBASE_AUTH_URI"),
+        envVariables.get("FIREBASE_TOKEN_URI"),
+        envVariables.get("FIREBASE_AUTH_PROVIDER_X509_CERT_URL"),
+        envVariables.get("FIREBASE_CLIENT_X509_CERT_URL"),
+        envVariables.get("FIREBASE_UNIVERSE_DOMAIN"));
+
+    // Converter a string JSON para um InputStream
+    ByteArrayInputStream credentialsStream = new ByteArrayInputStream(credentialsJson.getBytes(StandardCharsets.UTF_8));
+
+    // Criar as credenciais a partir do InputStream
+    GoogleCredentials credentials = GoogleCredentials.fromStream(credentialsStream);
+
+    // Configurar as opções do Firebase
     FirebaseOptions options = FirebaseOptions.builder()
-        .setCredentials(GoogleCredentials.fromStream(serviceAccountStream))
-        .setProjectId(projectId)
-        .setStorageBucket(storageBucket)
+        .setCredentials(credentials)
+        .setStorageBucket(envVariables.get("FIREBASE_STORAGE_BUCKET"))
         .build();
 
+    // Inicializar e retornar o FirebaseApp
     return FirebaseApp.initializeApp(options);
   }
+
 }
