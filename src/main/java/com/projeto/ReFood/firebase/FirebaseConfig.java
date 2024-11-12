@@ -5,48 +5,74 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.beans.factory.annotation.Value;
 
+import java.io.ByteArrayInputStream;
+import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 @Configuration
 public class FirebaseConfig {
 
+  @Value("${firebase.project-id}")
+  private String projectId;
+
+  @Value("${firebase.private-key-id}")
+  private String privateKeyId;
+
+  @Value("${firebase.private-key}")
+  private String privateKey;
+
+  @Value("${firebase.client-email}")
+  private String clientEmail;
+
+  @Value("${firebase.client-id}")
+  private String clientId;
+
+  @Value("${firebase.auth-uri}")
+  private String authUri;
+
+  @Value("${firebase.token-uri}")
+  private String tokenUri;
+
+  @Value("${firebase.auth-provider-x509-cert-url}")
+  private String authProviderCertUrl;
+
+  @Value("${firebase.client-x509-cert-url}")
+  private String clientCertUrl;
+
+  @Value("${firebase.universe-domain}")
+  private String universeDomain;
+
+  String pathKey = "/refoods/src/main/java/com/projeto/ReFood/firebase/refood-firebase-key.jsonc";
+
   @Bean
   public FirebaseApp initializeFirebase() throws IOException {
-    // Obtendo as variáveis de ambiente
-    String projectId = System.getenv("FIREBASE_PROJECT_ID");
-    String privateKey = System.getenv("FIREBASE_PRIVATE_KEY");
-    String clientEmail = System.getenv("FIREBASE_CLIENT_EMAIL");
+    // Criando um mapa com as configurações do Firebase
+    Map<String, Object> firebaseConfig = new HashMap<>();
+    firebaseConfig.put("type", "service_account");
+    firebaseConfig.put("project_id", projectId);
+    firebaseConfig.put("private_key_id", privateKeyId);
+    firebaseConfig.put("private_key", privateKey.replace("\\n", "\n"));
+    firebaseConfig.put("client_email", clientEmail);
+    firebaseConfig.put("client_id", clientId);
+    firebaseConfig.put("auth_uri", authUri);
+    firebaseConfig.put("token_uri", tokenUri);
+    firebaseConfig.put("auth_provider_x509_cert_url", authProviderCertUrl);
+    firebaseConfig.put("client_x509_cert_url", clientCertUrl);
 
-    // Construir o JSON com as credenciais a partir das variáveis de ambiente
-    String jsonCredentials = String.format(
-        "{ \"type\": \"service_account\", " +
-            "\"project_id\": \"%s\", " +
-            "\"private_key\": \"%s\", " +
-            "\"client_email\": \"%s\", " +
-            "\"auth_uri\": \"%s\", " +
-            "\"token_uri\": \"%s\", " +
-            "\"auth_provider_x509_cert_url\": \"%s\", " +
-            "\"client_x509_cert_url\": \"%s\" }",
-        projectId,
-        privateKey,
-        clientEmail,
-        System.getenv("FIREBASE_AUTH_URI"),
-        System.getenv("FIREBASE_TOKEN_URI"),
-        System.getenv("FIREBASE_AUTH_PROVIDER_X509_CERT_URL"),
-        System.getenv("FIREBASE_CLIENT_X509_CERT_URL"));
+    // Convertendo o mapa para um InputStream
+    ByteArrayInputStream serviceAccountStream = new ByteArrayInputStream(
+        new com.fasterxml.jackson.databind.ObjectMapper().writeValueAsBytes(firebaseConfig));
 
-    // Criando o InputStream para o GoogleCredentials a partir do JSON gerado
-    InputStream credentialsStream = new java.io.ByteArrayInputStream(jsonCredentials.getBytes());
-
-    // Configurando o Firebase com as credenciais fornecidas
     FirebaseOptions options = FirebaseOptions.builder()
-        .setCredentials(GoogleCredentials.fromStream(credentialsStream))
-        .setStorageBucket("refood-storage.appspot.com") // Modifique com seu bucket, se necessário
+        .setCredentials(GoogleCredentials.fromStream(serviceAccountStream))
+        .setProjectId(projectId)
         .build();
 
-    // Inicializando o Firebase
     return FirebaseApp.initializeApp(options);
   }
+
 }
