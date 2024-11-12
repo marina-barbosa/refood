@@ -46,10 +46,20 @@ public class FirebaseConfig {
   @Value("${firebase.universe-domain}")
   private String universeDomain;
 
-  String pathKey = "/refoods/src/main/java/com/projeto/ReFood/firebase/refood-firebase-key.jsonc";
+  @Value("${firebase.storage-bucket}")
+  private String storageBucket;
 
   @Bean
   public FirebaseApp initializeFirebase() throws IOException {
+    System.out.println("Project ID: " + projectId);
+    System.out.println("Private Key ID: " + privateKeyId);
+    System.out.println("Client Email: " + clientEmail);
+    
+    // Verifique se as variáveis estão corretas
+    if (projectId == null || privateKey == null || clientEmail == null) {
+      throw new IllegalArgumentException("Some Firebase environment variables are not set.");
+    }
+
     // Criando um mapa com as configurações do Firebase
     Map<String, Object> firebaseConfig = new HashMap<>();
     firebaseConfig.put("type", "service_account");
@@ -70,9 +80,9 @@ public class FirebaseConfig {
     FirebaseOptions options = FirebaseOptions.builder()
         .setCredentials(GoogleCredentials.fromStream(serviceAccountStream))
         .setProjectId(projectId)
+        .setStorageBucket(storageBucket)
         .build();
 
     return FirebaseApp.initializeApp(options);
   }
-
 }
